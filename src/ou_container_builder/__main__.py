@@ -11,7 +11,7 @@ try:
 except ImportError:
     from yaml import Loader
 
-from . import jupyter_notebook
+from . import jupyter_notebook, web_app
 from .validator import validate_settings
 
 
@@ -44,6 +44,8 @@ def main(config, build, clean):
 
         if settings['type'] == 'jupyter-notebook':
             jupyter_notebook.generate(env, settings)
+        elif settings['type'] == 'web-app':
+            web_app.generate(env, settings)
 
         if 'content' in settings and settings['content']:
             with open('build/content_config.ini', 'w') as out_f:

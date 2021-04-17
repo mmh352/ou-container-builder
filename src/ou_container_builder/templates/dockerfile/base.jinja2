@@ -17,14 +17,39 @@ RUN useradd -u $UID -g $GID -d /home/$USER -m $USER && \
     mkdir -p $MODULE_HOME
 {% endblock %}
 
-{% block apt %}
 RUN apt-get update -y && \
-    apt-get install -y tini
+    apt-get install -y tini{% if sources.apt %} curl gnupg{% endif %}
+
+{% block apt_sources %}
+{% if sources.apt %}
+{% for source in sources.apt %}
+RUN curl -fsSL "{{ source.key }}" | apt-key --keyring "/etc/apt/trusted.gpg.d/{{ source.name }}.gpg" add - && \
+    echo "{{ source.deb }}" > "/etc/apt/sources.list.d/{{ source.name }}.list"
+{% endfor %}
+RUN apt-get update -y && \
+    apt-get dist-upgrade -y
+{% endif %}
+{% endblock %}
+
+{% block apt %}
+{% if packages.apt %}
+RUN apt install -y {{ ' '.join(packages.apt) }}
+{% endif %}
 {% endblock %}
 
 {% block pip %}{% endblock %}
 
-{% block jupyter_setup %}{% endblock %}
+{% block scripts %}
+{% if scripts %}
+{% for script in scripts %}
+{% if script.inline %}
+RUN {{ '&& \\\n    '.join(script.inline) }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+{% block application %}{% endblock %}
 
 {% if content %}
 {% block content_setup %}
