@@ -39,27 +39,31 @@ RUN apt install -y {{ ' '.join(packages.apt) }}
 
 {% block pip %}{% endblock %}
 
+{% if content %}
+{% block content_setup %}
+RUN mkdir -p /etc/module-content/data
+COPY build/content_config.ini /etc/module-content/config.ini
+{% for part in content %}
+{% if part.target.startswith('/') %}
+COPY {{ part.source }} {{ part.target }}
+{% else %}
+COPY {{ part.source }} /etc/module-content/data/{{ part.target }}
+{% endif %}
+{% endfor %}
+{% endblock %}
+{% endif %}
+
 {% block scripts %}
 {% if scripts %}
 {% for script in scripts %}
 {% if script.inline %}
-RUN {{ '&& \\\n    '.join(script.inline) }}
+RUN {{ ' && \\\n    '.join(script.inline) }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% endblock %}
 
 {% block application %}{% endblock %}
-
-{% if content %}
-{% block content_setup %}
-RUN mkdir -p /etc/module-content/data
-COPY content_config.ini /etc/module-content/config.ini
-{% for part in content %}
-COPY {{ part.source }} /etc/module-content/data/{{ part.target }}
-{% endfor %}
-{% endblock %}
-{% endif %}
 
 {% block set_permissions %}
 RUN chown -R $USER:$GID $HOME
