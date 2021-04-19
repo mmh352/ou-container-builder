@@ -55,8 +55,9 @@ def main(context, build, clean):
         if build:
             subprocess.run(('docker', 'build', context))
             if clean:
-                if os.path.exists('build'):
-                    shutil.rmtree('build')
+                os.unlink(os.path.join(context, 'Dockerfile'))
+                if os.path.exists(os.path.join(context, 'build')):
+                    shutil.rmtree(os.path.join(context, 'build'))
     else:
         click.echo(click.style('There are errors in your configuration settings:', fg='red'), err=True)
         click.echo(err=True)
