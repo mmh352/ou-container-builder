@@ -48,8 +48,8 @@ def main(context, build, clean):
             web_app.generate(context, env, settings)
 
         if 'content' in settings and settings['content']:
-            with open(os.path.join(context, 'build', 'content_config.ini'), 'w') as out_f:
-                tmpl = env.get_template('content_config.ini')
+            with open(os.path.join(context, 'build', 'content_config.yaml'), 'w') as out_f:
+                tmpl = env.get_template('content_config.yaml')
                 out_f.write(tmpl.render(**settings))
 
         if build:
