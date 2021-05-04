@@ -70,7 +70,19 @@ jobs:
         sudo pip3 install poetry
         poetry install
 
-    - name: Run demo builds
+    - name: Create demo Dockerfiles
       run: |
-        poetry run ou-container-builder --context demos/jupyter-notebook
-        poetry run ou-container-builder --context demos/openrefine
+        poetry run ou-container-builder --context demos/jupyter-notebook --no-build
+        poetry run ou-container-builder --context demos/openrefine --no-build
+
+    - name: Build the Jupyter Notebook demo
+      uses: docker/build-push-action@v1.1.0
+      with:
+        push: false
+        context: demos/jupyter-notebook
+
+    - name: Build the Openrefine demo
+      uses: docker/build-push-action@v1.1.0
+      with:
+        push: false
+        context: demos/jupyter-notebook
