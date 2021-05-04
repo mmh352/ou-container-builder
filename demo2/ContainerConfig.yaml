@@ -1,5 +1,5 @@
 module:
-  code: TM351-openrefine
+  code: OpenRefine
   presentation: 21J
 type: web-app
 packages:
@@ -21,6 +21,6 @@ web_apps:
       - -p
       - "{port}"
       - -d
-      - /home/ou-user/TM351-openrefine-21J
+      - /home/ou-user/OpenRefine
     timeout: 120
     default: true
