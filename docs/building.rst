@@ -7,14 +7,17 @@ To run the OU Container Builder use the following command in the same directory 
 
     $ ou-container-builder
 
-To retain a copy of the build files (``Dockerfile``, other generated files), add the ``--no-clean `` switch.
+The ``ou-container-builder`` supports a range of command-line switches to configure the output:
 
-For a dry run (don't build the image), use ```--no-build`.
+* ``-b``, ``--build``: Automatically build the Docker image [Default behaviour].
+* ``-c``, ``--context``: The context directory that contains the ``ContainerConfig.yaml`` [Default: .].
+* ``--clean``: Clean all temporary files generated for the Docker build [Default behaviour].
+* ``--help``: Show all available command-line switches.
+* ``-nb``, ``--no-build``: Generate the Dockerfile, but do not build it. This implies ``--no-clean``.
+* ``--no-clean``: Do not clean the temporary files generated for the Docker build.
+* ``--tag {TAG}``: Tag the resulting Docker image. The full tag that is passed to Docker is ``mmh352/CODE-PRESENTATION:TAG``,
+  where ``CODE`` and ``PRESENTATION`` are taken from the ``ContainerConfig.yaml``.
 
-To name and tag the generated image, use the ``--tag IMAGENAME`` switch.
+.. note::
 
-To see a full list of supported command-line parameters, use the following command:
-
-.. sourcecode:: console
-
-    $ ou-container-builder --help
+    The Docker image tag currently has a hard-coded account part. This will in future be updated to use the OU Docker repository.
