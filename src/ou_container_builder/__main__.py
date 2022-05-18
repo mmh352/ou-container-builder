@@ -69,6 +69,7 @@ def run_build(settings: dict, context: str, build: bool, clean: bool, tag: list)
         if 'scripts' in settings:
             settings = packs.scripts(context, env, settings)
         settings = packs.content(context, env, settings)
+        settings = packs.env(context, env, settings)
 
         # Handle automatic hacks
         if 'packages' in settings and 'apt' in settings['packages']:

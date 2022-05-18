@@ -16,5 +16,6 @@ command-line.
     packages/index
     scripts
     services
+    env
     hacks
     flags

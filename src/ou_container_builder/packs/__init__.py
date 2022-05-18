@@ -10,3 +10,4 @@ from .mariadb import apply_pack as mariadb  # noqa
 from .services import apply_pack as services  # noqa
 from .content import apply_pack as content  # noqa
 from .scripts import apply_pack as scripts  # noqa
+from .env import apply_pack as env  # noqa

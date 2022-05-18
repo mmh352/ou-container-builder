@@ -239,6 +239,24 @@ schema = {
             'empty': False
         }
     },
+    'environment': {
+        'type': 'list',
+        'schema': {
+            'type': 'dict',
+            'schema': {
+                'name': {
+                    'type': 'string',
+                    'required': True,
+                    'empty': False
+                },
+                'value': {
+                    'type': 'string',
+                    'required': True,
+                    'default': ''
+                }
+            }
+        }
+    },
     'packs': {
         'type': 'list',
         'schema': {
